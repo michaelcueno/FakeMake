@@ -9,9 +9,11 @@ public class Graph{
 	public void add( String fileName, Vertex v ){
 	
 		map.put( fileName, v );
-		for( String name : v.dependancies ){
-			Vertex d = map.get(name);
-			d.indegree++;
+		if(!v.isBasic()){
+			for( String name : v.dependancies ){
+				Vertex d = map.get(name);
+				d.indegree++;
+			}
 		}	
 
 	}
@@ -106,6 +108,8 @@ public class Graph{
 
 			}else {
 				if(!v.visited){
+					System.out.println(v);
+					System.out.println("time: " + time);
 					boolean upToDate = true;
 					for( String n : v.dependancies ){
 						Vertex d = map.get(n);

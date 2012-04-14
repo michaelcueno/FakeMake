@@ -39,4 +39,20 @@ public class Vertex{
 	public void setTime( int time ){
 		timeStamp = time;
 	}
+
+	public static void main( String[] args ){
+		Vertex v = new Vertex("test");
+		System.out.println("Test cases, filename = " + v.getName());
+		
+		if(v.isBasic())
+			System.out.println("I'm basic ");
+		
+		v.addAdj("dep1");
+
+		if(!v.isBasic())
+			System.out.println("working");
+
+		v.setTime(3);
+		System.out.println("my timestamp reads: " + v.timeStamp);
+	}
 }
