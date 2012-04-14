@@ -28,7 +28,7 @@ public class Vertex{
 	@Override
 	public String toString(){
 	
-		return(name +" : "+ dependancies +"\n");
+		return(name +" : "+ dependancies );
 
 	}
 

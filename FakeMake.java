@@ -26,7 +26,12 @@ public class FakeMake{
 		String file = null;
 		Graph graph = new Graph();
 		
-		// Initialize Graph with adjacency list implementation  
+		/*
+		 * Initialize Graph with adjacency list implementation  
+		 * Get graph info from file using a nexted scanner structure
+		 * that grabs a line from the file, then uses a second scanner to 
+		 * parse that particular line
+		*/
 
 		while(fileScanner.hasNextLine()){
 
@@ -37,10 +42,6 @@ public class FakeMake{
 
 				file = lineScanner.next();
 				Vertex v = new Vertex(file);
-				if(graph.contains(file)){
-					System.out.println("Make file contains repeated file Names. Program will exit");
-					System.exit(0);
-				}
 
 				if(lineScanner.hasNext()){
 					if(lineScanner.next().equals(":")){
@@ -51,14 +52,18 @@ public class FakeMake{
 						}
 					}
 				}
-				graph.add(file, v);
+				if(!graph.add(file, v)){
+					System.out.println("Make file has repeated file names");
+					System.exit(0);
+				}
 			}
 		}	
 
-
+		graph.setIndegrees();
 			
-		// Take user input for commands and run respective methods
-
+		/*
+		 * Start interactive mode
+		*/
 
 		if(graph.hasCycle()){
 			System.out.println("This make file has a cycle. Program will exit");

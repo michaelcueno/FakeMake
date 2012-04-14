@@ -6,22 +6,37 @@ public class Graph{
 	public HashMap<String,Vertex> map = new HashMap<String,Vertex>();	
 	public int time = 1;	
 
-	public void add( String fileName, Vertex v ){
+	public boolean add( String fileName, Vertex v ){
 	
-		map.put( fileName, v );
-		if(!v.isBasic()){
-			for( String name : v.dependancies ){
-				Vertex d = map.get(name);
-				d.indegree++;
-			}
-		}	
+		if(map.containsKey(fileName)){
+			return false;
+		}else{
+			map.put( fileName, v );
+			return true;
 
+		}
 	}
 
+	public void setIndegrees(){
+
+		for( Vertex v : map.values() ){
+			if(!v.isBasic()){
+				for( String name : v.dependancies ){
+					if( map.containsKey(name)){
+						
+						Vertex d = map.get(name);
+						d.indegree++;
+					}
+				}
+			}
+		}	
+	}
+
+	
 	public boolean hasCycle(){
 		
 		int count = 0;
-		Stack s = new Stack();
+		Stack<Vertex> s = new Stack<Vertex>();
 
 		for( Vertex v : map.values() ){
 			if(v.indegree == 0)
@@ -108,16 +123,12 @@ public class Graph{
 
 			}else {
 				if(!v.visited){
-					System.out.println(v);
-					System.out.println("time: " + time);
 					boolean upToDate = true;
 					for( String n : v.dependancies ){
 						Vertex d = map.get(n);
 						update(d.getName());
 						if( d.timeStamp > v.timeStamp ){
 							upToDate = false;
-							v.setTime(time);
-							time++;
 						}
 					}
 					v.visited = true;
@@ -125,6 +136,8 @@ public class Graph{
 						System.out.println( v.getName() + " is up to date");
 					}else{
 						System.out.println("making " + v.getName() + "...done");
+						v.setTime(time);
+						time++;	
 					}
 				}
 			}
