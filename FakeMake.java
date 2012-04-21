@@ -53,13 +53,11 @@ public class FakeMake{
 			}
 		}	
 
-		// Indegrees used for cycle detection
 		graph.setIndegrees();
 			
 		// Take user input for commands and run respective methods
 
 
-		// Start interactive mode
 		if(graph.hasCycle()){
 			System.out.println("This make file has a cycle. Program will exit");
 		}else{

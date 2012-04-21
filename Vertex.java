@@ -3,13 +3,13 @@ import java.util.ArrayList;
 public class Vertex<T>{
 	
 	T value;
-	public ArrayList<T> dependancies;
+	public ArrayList<T> dependencies;
 	public boolean visited;
 	int timeStamp; 
 	int indegree;
 
 	public Vertex(T value){
-		dependancies = new ArrayList<T>();
+		dependencies = new ArrayList<T>();
 		this.value = value;
 		this.timeStamp = 0;
 		this.indegree = 0;
@@ -22,13 +22,13 @@ public class Vertex<T>{
 
 	public void addAdj(T adj){
 
-		dependancies.add(adj);
+		dependencies.add(adj);
 	}
 
 	@Override
 	public String toString(){
 	
-		return(value +" : "+ dependancies );
+		return(value +" : "+ dependencies );
 
 	}
 
@@ -36,7 +36,7 @@ public class Vertex<T>{
 	 * Returns true if the vertex has an indegree of zero
 	 */
 	public boolean isBasic(){
-		return (dependancies.size() == 0);
+		return (dependencies.size() == 0);
 	}
 
 	public void setTime( int time ){
