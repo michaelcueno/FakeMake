@@ -1,26 +1,26 @@
 import java.util.ArrayList;
 
-public class Vertex{
+public class Vertex<T>{
 	
-	String name;
-	public ArrayList<String> dependancies;
+	T value;
+	public ArrayList<T> dependancies;
 	public boolean visited;
 	int timeStamp; 
 	int indegree;
 
-	public Vertex(String name){
-		dependancies = new ArrayList<String>();
-		this.name = name;
+	public Vertex(T value){
+		dependancies = new ArrayList<T>();
+		this.value = value;
 		this.timeStamp = 0;
 		this.indegree = 0;
 		this.visited = false;
 	}
 
-	public String getName(){
-		return this.name;
+	public T getValue(){
+		return this.value;
 	}
 
-	public void addAdj(String adj){
+	public void addAdj(T adj){
 
 		dependancies.add(adj);
 	}
@@ -28,10 +28,13 @@ public class Vertex{
 	@Override
 	public String toString(){
 	
-		return(name +" : "+ dependancies );
+		return(value +" : "+ dependancies );
 
 	}
 
+	/*
+	 * Returns true if the vertex has an indegree of zero
+	 */
 	public boolean isBasic(){
 		return (dependancies.size() == 0);
 	}
@@ -41,8 +44,8 @@ public class Vertex{
 	}
 
 	public static void main( String[] args ){
-		Vertex v = new Vertex("test");
-		System.out.println("Test cases, filename = " + v.getName());
+		Vertex<String> v = new Vertex<String>("test");
+		System.out.println("Test cases, filename = " + v.getValue());
 		
 		if(v.isBasic())
 			System.out.println("I'm basic ");
