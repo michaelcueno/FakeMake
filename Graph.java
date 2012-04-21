@@ -1,3 +1,8 @@
+/*
+ * @params
+ * map - data structure that holds verticies, key values are verticies name
+ * time - local 'clock' for simulating timestamp updates in touch and make methods
+*/
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -17,6 +22,12 @@ public class Graph <T> {
 		}
 	}
 
+/*
+ * Sets indegrees of all vertices. A vertex's indegree is determined by the
+ * number of target files that rely on it.  
+ * Runtime: Runs through all the vertecies and all edges at each vertex. O(V + E)
+ */
+	
 	public void setIndegrees(){
 
 		for( Vertex<T> v : map.values() ){
@@ -32,7 +43,20 @@ public class Graph <T> {
 		}	
 	}
 
-	
+/*
+ * Returns true if graph has a cycle
+ * uses stack algorithm to determine if cycle exists:
+ * 	1. Put any vertex with indegree == 0 on stack and increment count
+ * 	2. While stack is not empty pop one vertex and
+ * 		decrement the indegree of every dependancy of that vertex
+ * 	3. if any dependancies' indegree fell to zero, push it to the stack
+ * 
+ * when the stack is empty, if no cycle, every vertex should have been placed 
+ * on the stack at some point, thus count should be equal to map.size();
+ *
+ * Runtime: In the worst case, the algorithm runs through every vertex and then 
+ * through every edge of that vertex. Thus the runtime is O(V + E)
+ */ 	
 	public boolean hasCycle(){
 		
 		int count = 0;
@@ -107,10 +131,19 @@ public class Graph <T> {
 		}
 	}
 
-	/*
-	 * Recursive function that updates a vertex's timestamp iff any of 
-	 * its dependacies have a timestamp greater than its own.
-	*/
+/*
+ * Funtion: Recursive function that updates a vertex's timestamp iff any of 
+ * 	it's dependacies have a timestamp greater than its own.
+ * Alorithm: Recurse on every dependancy of the current vertex, 
+ * 	if any dependancy has a greater timestamp than the current vertex,
+ * 	update the current vertex. Once all dependancies are exhausted, 
+ * 	mark the current vertex visited as to not revisit it in any other
+ * 	target file dependacy lists.
+ * Runtime: This method will always visit every vertex in the directed graph that
+ * 	is connected to the target file directly and indirectly. It tries minimize the number
+ * 	of edges it travels down by marking visited vertices, but it will in the worst case
+ * 	therefore the runtime is O( V + E );
+*/
 	private void update( T value ){
 
 		if(map.containsKey( value )){
